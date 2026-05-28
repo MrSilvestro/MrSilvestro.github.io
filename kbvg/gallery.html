@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Killer Bikini Vampire Girls</title>
+
+  <script src="cdn-tailwindcss-com_style.css"></script>
+
+  <style>
+    body {
+      background: black;
+      overflow-x: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .grain::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url('k_img/asfalt-dark.png');
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    
+.gallery{
+  position:relative;
+  width:100%;
+  height:700px;
+  perspective:2000px;
+  overflow:hidden;
+  margin-top:-50px;
+}
+
+.card{
+  position:absolute;
+  width:55vw;
+  height:70vh;
+  top:50%;
+  left:50%;
+  border-radius:20px;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  cursor:pointer;
+  transition:
+    transform 0.8s cubic-bezier(.2,.8,.2,1),
+    opacity 0.8s ease,
+    filter 0.8s ease;
+  box-shadow:0 40px 80px rgba(0,0,0,0.7);
+  background:#111;
+}
+
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.1)
+  );
+}
+
+.title{
+  position:absolute;
+  bottom:35px;
+  left:35px;
+  z-index:5;
+}
+
+.title h2{
+  font-size:2.5rem;
+  letter-spacing:0.08em;
+  margin-bottom:10px;
+}
+
+.title p{
+  opacity:0.7;
+}
+
+.nav{
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  width:70px;
+  height:70px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  font-size:2rem;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  transition:0.3s;
+  z-index:100;
+}
+
+.nav:hover{
+  background:rgba(255,255,255,0.18);
+}
+
+.prev{
+  left:30px;
+}
+
+.next{
+  right:30px;
+}
+
+/* FULLSCREEN VIEWER */
+
+.viewer{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.4s ease;
+}
+
+.viewer.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.viewer img{
+  width:90%;
+  height:90%;
+  object-fit:contain;
+  animation:zoomIn 0.4s ease;
+}
+
+.close{
+  position:absolute;
+  top:25px;
+  right:35px;
+  font-size:3rem;
+  cursor:pointer;
+  color:white;
+  opacity:0.7;
+  transition:0.3s;
+}
+
+.close:hover{
+  opacity:1;
+}
+
+@keyframes zoomIn{
+  from{
+    transform:scale(0.8);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@media(max-width:900px){
+
+  .card{
+    width:85vw;
+    height:60vh;
+  }
+
+  .title h2{
+    font-size:1.8rem;
+  }
+
+  .nav{
+    width:55px;
+    height:55px;
+  }
+}
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="text-white grain">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-red-900/40">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+
+      <div>
+        <a href="index.html"><img src="k_img/title.png" width=50%></a>
+        <p class="text-xs uppercase tracking-[0.4em] text-white/50 mt-1">
+          Official Movie Series Archive
+        </p>
+      </div>
+
+      <nav class="hidden md:flex gap-8 uppercase text-sm tracking-[0.2em] text-white/70">
+        <a href="films.html" class="hover:text-red-400 transition-colors">Films</a>
+        <a href="lore.html" class="hover:text-red-400 transition-colors">Lore</a>
+        <a href="gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-32 px-6">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="mb-20">
+        <p class="uppercase tracking-[0.4em] text-red-500 text-sm mb-4">
+          Gallery
+        </p>
+
+
+        <h3 class="text-5xl md:text-7xl font-black uppercase leading-none">
+          Behind the scenes</h3></div>
+
+<div class="gallery">
+
+  <button class="nav prev">&#10094;</button>
+  <button class="nav next">&#10095;</button>
+
+  <div class="card">
+    <img src="k_img/g1001.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Quinn (Scott Congdon), the ultimate vampire hunter, knew they would return one day...</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2001.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Charisma (Renae Geddes) feasting on Ash (Jamie Hansen)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2002.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Vampire hunters Anthony (Cal Rein) and Quinn (Scott Congdon) are on the scene</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2003.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kristine (Katharine von Puttkamer) about to kick it off</p>
+    </div>
+  </div>
+
+<div class="card">
+    <img src="k_img/bts001.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Production Designer, Kate Separovich, dressing the set</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2004.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Anthony (Cal Rein) fighting with Eliza (Tiffany Elt)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts007.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Cast members with Drew Fleming, multi-award winning Judo champion, who choreographed the beach fight sequence</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2006.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Schoolgirls turned vampires (Nicquel Barkla, Michelle Parkin and Joanne Randazzo), covered in blood</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2007.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Feast of the Killer Bikini Vampire Girls: schoolgirls Amanda (Danielle Edwards) and Clare (Samantha Robb)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts003.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Extremely talented 1st AD, Jacki Collis, ensuring nothing is missed</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g2008.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Renae Geddes hates sand - it’s coarse and rough and irritating, and it gets everywhere</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts010.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Cal Rein checking his motivation</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts004.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>1st AC, Chris Morris, in the trunk of the Chevy to get that signature shot</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3001.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kim Renae Silverstone is ready for her close-up</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3002.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Robia (Kerri-Anne Huvud) covered in blood</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts002.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Cinematographer, Stewart Hadfield, setting up a shot</p>
+    </div>
+  </div>
+
+<div class="card">
+    <img src="k_img/g3003.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Camp councilor Alyssa (Eileen Payne) wasn't expecting that</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3004.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Quinn (Scott Congdon) wants to make sure Robia (Kerri-Anne Huvud) gets the point</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts008.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Olivia Darby rehersing her scream</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts009.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Stephen Lloyd, on set and waiting to die</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3005.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kerri-Anne Huvud and Miley Tunnecliffe enjoying themselves on set</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts005.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Jake Dawson burning his fingers to adjust the light</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3006.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kim Renae Silverstone checking her hair and make-up</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts006.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Ian Strang getting ready to swing the boom</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g3007.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Iyari (Miley Tunnecliffe) surprises camp councilor Alyssa (Eileen Payne) in cabin #42</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts011.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Bree O'Hehir waiting to play pool?</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts012.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kim Renae Silverstone and Eileen Payne, on location and waiting to film their scenes</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts013.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Deleted scene: Chris Morris setting up for Juliet's (Bridget Moore) beheading</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts014.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>10 years later and the gang is back together filming at a church</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts020.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts018.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Superstar 1st AD Jayne Doyle shares an amusing story while script supervisor Anna Adey looks on</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g5001.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Kirsty (Aimee Claire Nicholls) is surprised by the relic</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g5002.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Bryan (Mikel Haramboure) is keeping guard</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g5003.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Lily (Rebecca Fowler) comes to a sticky end</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/g5004.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Anne (Tammy Walters) and Kirsty (Aimee Claire Nicholls) enjoy a late night snack</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts015.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Legendary sound recordist Andy Parnell swinging the boom while Jake Treacher and Stephen Lloyd rehearse the scene</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts016.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Remi Sinclair applying blood to the dismembered arm</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="k_img/bts017.jpg">
+    <div class="overlay"></div>
+    <div class="title">
+      <p>Nathan Smith holding the clapper while everyone else stands around quietly as Andy Parnell records church tone</p>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- FULLSCREEN IMAGE VIEWER -->
+
+<div class="viewer" id="viewer">
+  <span class="close" id="closeViewer">&times;</span>
+  <img id="viewerImage" src="">
+</div>
+
+<script>
+
+const cards = document.querySelectorAll('.card');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+
+const viewer = document.getElementById('viewer');
+const viewerImage = document.getElementById('viewerImage');
+const closeViewer = document.getElementById('closeViewer');
+
+let current = 0;
+
+function updateGallery(){
+
+  cards.forEach((card, index) => {
+
+    const offset = index - current;
+    const absOffset = Math.abs(offset);
+
+    let rotateY = offset * -25;
+    let translateX = offset * 280;
+    let translateZ = -absOffset * 180;
+    let scale = 1 - absOffset * 0.08;
+    let opacity = absOffset > 3 ? 0 : 1;
+
+    card.style.transform = `
+      translate(-50%, -50%)
+      translateX(${translateX}px)
+      translateZ(${translateZ}px)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    card.style.zIndex = 100 - absOffset;
+    card.style.opacity = opacity;
+
+    card.style.filter = `
+      brightness(${1 - absOffset * 0.15})
+    `;
+  });
+}
+
+nextBtn.addEventListener('click', () => {
+  current = (current + 1) % cards.length;
+  updateGallery();
+});
+
+prevBtn.addEventListener('click', () => {
+  current = (current - 1 + cards.length) % cards.length;
+  updateGallery();
+});
+
+document.addEventListener('keydown', (e) => {
+
+  if(viewer.classList.contains('active')){
+
+    if(e.key === 'Escape'){
+      closeFullscreen();
+    }
+
+    return;
+  }
+
+  if(e.key === 'ArrowRight'){
+    current = (current + 1) % cards.length;
+    updateGallery();
+  }
+
+  if(e.key === 'ArrowLeft'){
+    current = (current - 1 + cards.length) % cards.length;
+    updateGallery();
+  }
+
+  if(e.key === 'Enter'){
+    openFullscreen(current);
+  }
+});
+
+function openFullscreen(index){
+
+  const img = cards[index].querySelector('img');
+
+  viewerImage.src = img.src;
+
+  viewer.classList.add('active');
+}
+
+function closeFullscreen(){
+  viewer.classList.remove('active');
+}
+
+closeViewer.addEventListener('click', closeFullscreen);
+
+viewer.addEventListener('click', (e) => {
+  if(e.target === viewer){
+    closeFullscreen();
+  }
+});
+
+cards.forEach((card, index) => {
+
+  card.addEventListener('click', () => {
+
+    if(index === current){
+      openFullscreen(index);
+    } else {
+      current = index;
+      updateGallery();
+    }
+
+  });
+
+});
+
+updateGallery();
+
+</script>
+
+
+  <!-- Footer -->
+  <footer class="py-20 px-6 border-t border-white/10 text-center">
+
+    <p class="uppercase tracking-[0.3em] text-white/40 text-sm">
+      Killer Bikini Vampire Girls © 2005-2026 Sam's Son
+    </p>
+
+  </footer>
+
+</body>
+</html>
