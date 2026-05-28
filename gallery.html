@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sam's Son Production Design</title>
+  <link rel="stylesheet" href="samssonstyle.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+</head>
+<body>
+    <!-- Bokeh Background Canvas -->
+    <canvas id="bokeh-canvas"></canvas>
+    
+    <!-- Frosted Glass Overlay -->
+    <div class="glass-overlay"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="img/logo-long-onB.png" width=150px>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="index.html#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+
+  <!-- Gallery -->
+  <div class="gallery">
+
+    <div class="counter">
+        <span id="current">01</span> / <span id="total">05</span>
+    </div>
+
+    <div class="nav prev" id="prevBtn">&#10094;</div>
+
+    <div class="image-wrapper">
+
+        <img id="galleryImage" src="images/image1.jpg">
+
+        <div class="image-info">
+            <h1 id="title">Production Design</h1>
+            <p id="description">
+                Cinematic spaces designed to support atmosphere, emotion, and story.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="nav next" id="nextBtn">&#10095;</div>
+
+</div>
+
+
+<script>
+
+const images = [
+
+{
+    src:"gallery/image00.jpg",
+    title:" ",
+    description:" "
+},
+
+{
+    src:"gallery/image01.jpg",
+    title:" ",
+    description:" "
+},
+
+{
+    src:"gallery/image02.jpg",
+    title:"EXO-226",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image03.jpg",
+    title:" ",
+    description:" "
+},
+
+{
+    src:"gallery/image04.png",
+    title:"D.E.A.D.",
+    description:" "
+},
+
+{
+    src:"gallery/image05.jpg",
+    title:" ",
+    description:" "
+},
+
+{
+    src:"gallery/image06.png",
+    title:"They're Ready For You",
+    description:" "
+},
+
+{
+    src:"gallery/image07.jpg",
+    title:" ",
+    description:" "
+},
+
+{
+    src:"gallery/image08.jpg",
+    title:"The Death Of Me",
+    description:" "
+},
+
+{
+    src:"gallery/image19.jpg",
+    title:"Dungeons, Goblins & Broccoli",
+    description:"BTS photo - the set is dressed"
+},
+
+{
+    src:"gallery/image20.jpg",
+    title:"The Enchanted Ball",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image21.jpg",
+    title:"The Vanishing of Gabrielle Winters",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image22.jpg",
+    title:"What You Leave Behind",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image23.jpg",
+    title:"Misconception",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image24.jpg",
+    title:"Two Graves",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image25.jpg",
+    title:"Nightmare Of Alice",
+    description:"BTS photo by Alex"
+},
+
+{
+    src:"gallery/image26.jpg",
+    title:"Becomming Emma Braintree",
+    description:"BTS photo - John watches on as his rain-rig does what it's meant to do"
+},
+
+{
+    src:"gallery/image27.jpg",
+    title:"A Creature Like Me",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image28.jpg",
+    title:"Break A Leg",
+    description:"Official crew photo"
+},
+
+{
+    src:"gallery/image30.jpg",
+    title:"Timeline",
+    description:"BTS photo - John assembling an aerial on set"
+},
+
+{
+    src:"gallery/image31.jpg",
+    title:"Self Tape",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image32.jpg",
+    title:"Panther In The Dark",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image33.jpg",
+    title:"Healing Heroes",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image34.jpg",
+    title:"Stage Fright",
+    description:" "
+},
+
+{
+    src:"gallery/image35.jpg",
+    title:"Fragments",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image36.jpg",
+    title:"And Several Butchers' Aprons",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image37.jpg",
+    title:"The Blood That Remains",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image38.jpg",
+    title:"A Fatal Error",
+    description:"BTS photo"
+},
+
+{
+    src:"gallery/image99.jpg",
+    title:"Killer Bikini Vampire Girls Strike Back",
+    description:"BTS photo by Scott Congdon"
+}
+];
+
+let currentIndex = 0;
+
+const galleryImage = document.getElementById("galleryImage");
+const title = document.getElementById("title");
+const description = document.getElementById("description");
+
+const current = document.getElementById("current");
+const total = document.getElementById("total");
+
+total.textContent = String(images.length).padStart(2,"0");
+
+function updateGallery(){
+
+    const image = images[currentIndex];
+
+    galleryImage.src = image.src;
+    title.textContent = image.title;
+    description.textContent = image.description;
+
+    current.textContent =
+        String(currentIndex + 1).padStart(2,"0");
+}
+
+document.getElementById("nextBtn")
+.addEventListener("click", ()=>{
+
+    currentIndex++;
+
+    if(currentIndex >= images.length){
+        currentIndex = 0;
+    }
+
+    updateGallery();
+});
+
+document.getElementById("prevBtn")
+.addEventListener("click", ()=>{
+
+    currentIndex--;
+
+    if(currentIndex < 0){
+        currentIndex = images.length - 1;
+    }
+
+    updateGallery();
+});
+
+
+/* KEYBOARD */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "ArrowRight"){
+        document.getElementById("nextBtn").click();
+    }
+
+    if(e.key === "ArrowLeft"){
+        document.getElementById("prevBtn").click();
+    }
+
+    if(e.key === "Escape"){
+        fullscreen.classList.remove("active");
+    }
+});
+
+updateGallery();
+
+</script>
+
+
+  </main>
+    <footer>
+<a href="https://www.instagram.com/john.silvestro" target=_blank><img src="img/logo-instagram.png" alt="Instagram" width="3%"></a> &nbsp; 
+<a href="https://www.facebook.com/SamsSonProductions" target=_blank><img src="img/logo-facebook.png" alt="Facebook" width="3%"></a> &nbsp; 
+<a href="https://www.youtube.com/@SamsSonProductions" target=_blank><img src="img/logo-youtube.png" alt="YouTube" width="3%"></a> &nbsp; 
+<a href="http://twitter.com/sams_son" target=_blank><img src="img/logo-twitterX.png" alt="Twitter X" width="3%"></a>
+<br />
+        <p><a href=mailto:JBproductiondesigner@protonmail.com>Sam's Son</a> © 2002-2026 <br />Designed with passion.</p>
+    </footer>
+
+    <script>
+        // Bokeh Background Animation
+        class BokehBackground {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.particleCount = 80;
+                this.resize();
+                this.init();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            init() {
+                this.particles = [];
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push(this.createParticle());
+                }
+            }
+
+            createParticle() {
+                // Full spectrum colors using HSL
+                const hue = Math.random() * 360;
+                const saturation = 70 + Math.random() * 30;
+                const lightness = 50 + Math.random() * 20;
+                
+                return {
+                    x: Math.random() * this.canvas.width,
+                    y: Math.random() * this.canvas.height,
+                    radius: Math.random() * 40 + 10,
+                    hue: hue,
+                    saturation: saturation,
+                    lightness: lightness,
+                    alpha: Math.random() * 0.4 + 0.1,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.01 + Math.random() * 0.02
+                };
+            }
+
+            drawParticle(p) {
+                const pulseAlpha = p.alpha + Math.sin(p.pulse) * 0.1;
+                const pulseRadius = p.radius + Math.sin(p.pulse) * 5;
+                
+                const gradient = this.ctx.createRadialGradient(
+                    p.x, p.y, 0,
+                    p.x, p.y, pulseRadius
+                );
+                
+                gradient.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${pulseAlpha})`);
+                gradient.addColorStop(0.5, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, ${pulseAlpha * 0.5})`);
+                gradient.addColorStop(1, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, 0)`);
+                
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, pulseRadius, 0, Math.PI * 2);
+                this.ctx.fillStyle = gradient;
+                this.ctx.fill();
+            }
+
+            update() {
+                this.particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.pulse += p.pulseSpeed;
+                    
+                    // Slowly shift hue for color animation
+                    p.hue = (p.hue + 0.1) % 360;
+                    
+                    // Wrap around screen edges
+                    if (p.x < -p.radius) p.x = this.canvas.width + p.radius;
+                    if (p.x > this.canvas.width + p.radius) p.x = -p.radius;
+                    if (p.y < -p.radius) p.y = this.canvas.height + p.radius;
+                    if (p.y > this.canvas.height + p.radius) p.y = -p.radius;
+                });
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.update();
+                this.particles.forEach(p => this.drawParticle(p));
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize Bokeh Background
+        const bokehCanvas = document.getElementById('bokeh-canvas');
+        new BokehBackground(bokehCanvas);
+
+        // Scroll-triggered Animations
+        class ScrollAnimator {
+            constructor() {
+                this.sections = document.querySelectorAll('.section-content');
+                this.projectCards = document.querySelectorAll('.project-card');
+                this.galleryItems = document.querySelectorAll('.gallery-item');
+                this.skillTags = document.querySelectorAll('.skill-tag');
+                this.nav = document.querySelector('nav');
+                
+                this.observerOptions = {
+                    threshold: 0.2,
+                    rootMargin: '0px 0px -10% 0px'
+                };
+                
+                this.init();
+            }
+
+            init() {
+                // Section observer
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, this.observerOptions);
+
+                this.sections.forEach(section => sectionObserver.observe(section));
+
+                // Project cards observer
+                const cardObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                this.projectCards.forEach(card => cardObserver.observe(card));
+
+                // Gallery items observer
+                const galleryObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.2 });
+
+                this.galleryItems.forEach(item => galleryObserver.observe(item));
+
+                // Skill tags observer
+                const skillObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.skillTags.forEach((tag, index) => {
+                    tag.style.transitionDelay = `${index * 0.05}s`;
+                    skillObserver.observe(tag);
+                });
+
+                // Nav scroll effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        this.nav.classList.add('scrolled');
+                    } else {
+                        this.nav.classList.remove('scrolled');
+                    }
+                });
+
+                // Trigger initial animation for hero
+                setTimeout(() => {
+                    document.querySelector('.hero-content').classList.add('visible');
+                }, 100);
+            }
+        }
+
+        new ScrollAnimator();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
