@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Communication Array</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/*************************************************
+
+COMMUNICATION ARRAY
+Film Prop Interface
+Version 1.0
+Created by JB - johnwasadj @ gmail.com
+
+*************************************************/
+
+:root{
+
+    --bg:#03080b;
+    --panel:#07181d;
+    --cyan:#6ef9ff;
+    --cyan2:#35d4e8;
+    --cyan3:#153f48;
+
+    --green:#67ff93;
+    --red:#ff5d5d;
+    --amber:#ffc857;
+
+    --line:
+        rgba(110,249,255,.25);
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+    background:var(--bg);
+
+    font-family:
+
+        Consolas,
+        "Roboto Mono",
+        monospace;
+
+    color:var(--cyan);
+
+}
+
+body{
+
+    position:relative;
+
+}
+
+/**********************************************/
+
+#grid{
+
+    position:absolute;
+    inset:0;
+
+    background:
+
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+
+    background-size:50px 50px;
+
+    opacity:.16;
+
+}
+
+#scanlines{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.12;
+
+    background:
+
+    repeating-linear-gradient(
+
+        transparent 0px,
+        transparent 2px,
+
+        rgba(255,255,255,.07) 3px,
+
+        transparent 4px
+
+    );
+
+}
+
+#vignette{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(circle,
+    transparent 55%,
+    rgba(0,0,0,.55));
+
+}
+
+/**********************************************/
+
+#hud{
+
+    position:absolute;
+
+    inset:24px;
+
+    border:
+
+    2px solid rgba(110,249,255,.18);
+
+}
+
+/**********************************************/
+
+#titleBar{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:70px;
+
+    border-bottom:
+
+    1px solid rgba(110,249,255,.18);
+
+}
+
+#title{
+
+    position:absolute;
+
+    left:30px;
+    top:18px;
+
+    font-size:34px;
+
+    letter-spacing:8px;
+
+    font-weight:bold;
+
+}
+
+#version{
+
+    position:absolute;
+
+    right:30px;
+    top:26px;
+
+    opacity:.7;
+
+}
+
+/*************************************************
+LAYOUT
+*************************************************/
+
+#dashboard{
+
+    position:absolute;
+
+    left:25px;
+    right:25px;
+    top:90px;
+    bottom:25px;
+
+    display:grid;
+
+    grid-template-columns:320px 1fr 320px;
+    grid-template-rows:1fr 220px;
+
+    gap:22px;
+
+}
+
+.panel{
+
+    position:relative;
+
+    border:1px solid rgba(110,249,255,.18);
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(8,22,26,.92),
+        rgba(3,10,14,.95));
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 0 40px rgba(110,249,255,.03);
+
+}
+
+.panelTitle{
+
+    height:34px;
+
+    line-height:34px;
+
+    padding-left:14px;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+    border-bottom:1px solid rgba(110,249,255,.15);
+
+    color:#bffcff;
+
+}
+
+#radarPanel{
+
+    grid-column:1;
+    grid-row:1;
+
+}
+
+#centrePanel{
+
+    grid-column:2;
+    grid-row:1;
+
+}
+
+#diagnosticPanel{
+
+    grid-column:3;
+    grid-row:1;
+
+}
+
+#bottomPanel{
+
+    grid-column:1 / span 3;
+    grid-row:2;
+
+}
+
+.panelContent{
+
+    position:absolute;
+
+    inset:34px 0 0 0;
+
+}
+
+#screen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+}
+
+#screenHeading{
+
+    font-size:42px;
+
+    letter-spacing:7px;
+
+    margin-bottom:50px;
+
+    text-shadow:
+        0 0 15px rgba(0,255,255,.3);
+
+}
+
+#screenText{
+
+    text-align:center;
+
+    font-size:30px;
+
+    line-height:2.1;
+
+    letter-spacing:3px;
+
+}
+
+#bottomGrid{
+
+    position:absolute;
+
+    inset:0;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        300px
+        320px;
+
+}
+
+#waveCanvas{
+
+    width:100%;
+    height:100%;
+
+}
+
+#signalArea{
+
+    border-left:1px solid rgba(110,249,255,.12);
+
+    border-right:1px solid rgba(110,249,255,.12);
+
+}
+
+#commLog{
+
+    padding:14px;
+
+    font-size:13px;
+
+    overflow:hidden;
+
+    line-height:1.8;
+
+}
+
+#diagnostics{
+
+    padding:20px;
+
+    font-size:14px;
+
+    line-height:2.1;
+
+}
+
+/************************************************
+
+RADAR
+
+************************************************/
+
+#radarSVG{
+
+    width:100%;
+    height:100%;
+
+}
+
+.radarRing{
+
+    fill:none;
+
+    stroke:rgba(110,249,255,.22);
+
+    stroke-width:1.2;
+
+}
+
+.radarLine{
+
+    stroke:rgba(110,249,255,.15);
+
+    stroke-width:1;
+
+}
+
+.radarBeam{
+
+    fill:rgba(110,249,255,.16);
+
+}
+
+#radarSweep{
+
+    transform-origin:150px 150px;
+
+    animation:
+
+        rotateRadar 5s linear infinite;
+
+}
+
+@keyframes rotateRadar{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+.radarCentre{
+
+    fill:#88ffff;
+
+    filter:
+
+        drop-shadow(0 0 8px cyan);
+
+}
+
+.blip{
+
+    fill:#7efcff;
+
+    opacity:.8;
+
+    animation:
+
+        radarBlink 2.5s infinite;
+
+}
+
+.blip:nth-child(2){
+
+    animation-delay:.8s;
+
+}
+
+.blip:nth-child(3){
+
+    animation-delay:1.5s;
+
+}
+
+.blip:nth-child(4){
+
+    animation-delay:2.1s;
+
+}
+
+@keyframes radarBlink{
+
+    0%{
+
+        opacity:0;
+
+    }
+
+    25%{
+
+        opacity:1;
+
+    }
+
+    60%{
+
+        opacity:.3;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+    }
+
+}
+
+/************************************************
+
+MAIN SCREEN
+
+************************************************/
+
+#screenHeading{
+
+    color:#ff6767;
+
+    transition:
+        opacity .4s ease,
+        color .4s ease;
+
+}
+
+#subStatus{
+
+    margin-top:-30px;
+
+    margin-bottom:40px;
+
+    font-size:14px;
+
+    letter-spacing:4px;
+
+    opacity:.65;
+
+}
+
+.telemetry{
+
+    margin-top:30px;
+
+    font-size:18px;
+
+    line-height:2.2;
+
+    letter-spacing:2px;
+
+}
+
+/**********************************************
+METERS
+**********************************************/
+
+.meter{
+    margin-bottom:22px;
+}
+
+.meter label{
+    display:block;
+    margin-bottom:8px;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.bar{
+    width:100%;
+    height:16px;
+
+    border:1px solid rgba(110,249,255,.25);
+
+    background:
+    rgba(0,0,0,.4);
+
+    position:relative;
+}
+
+.stillbars{
+    width:100%;
+    height:16px;
+
+    border:1px solid rgba(110,249,255,.25);
+
+    background:
+    rgba(0,0,0,.4);
+
+    position:relative;
+}
+
+.fill{
+
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:50%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #35d4e8,
+        #6ef9ff
+    );
+
+    box-shadow:
+        0 0 10px rgba(110,249,255,.4);
+
+    transition:width .8s ease;
+}
+
+.nofill{
+
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:0%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #35d4e8,
+        #6ef9ff
+    );
+
+    box-shadow:
+        0 0 10px rgba(110,249,255,.4);
+
+    transition:width .8s ease;
+}
+
+/**********************************************
+SIGNAL DISPLAY
+**********************************************/
+
+#signalArea{
+    position:relative;
+    overflow:hidden;
+}
+
+.signalLine{
+    position:absolute;
+    left:0;
+    right:0;
+
+    height:1px;
+
+    background:
+    rgba(110,249,255,.35);
+
+    animation:
+    signalMove 4s linear infinite;
+}
+
+@keyframes signalMove{
+
+    from{
+        transform:translateX(-100%);
+    }
+
+    to{
+        transform:translateX(100%);
+    }
+}
+
+/**********************************************
+POPUPS
+**********************************************/
+
+.popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    padding: 35px;
+    border: 2px solid #ff6666;
+    background: #150808;
+    color: #ff9a9a;
+    box-shadow: 0 0 25px rgba(255,0,0,.45);
+    display: none; /* Hidden by default */
+    z-index: 20;
+}
+
+.popup h2 {
+    margin-bottom: 20px;
+    font-size: 34px;
+}
+
+.popup p {
+    font-size: 24px;
+    line-height: 1.6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="grid"></div>
+
+<div id="scanlines"></div>
+
+<div id="vignette"></div>
+
+<div id="hud">
+
+<div id="titleBar">
+
+<div id="title">
+
+COMMUNICATION ARRAY
+
+</div>
+
+<div id="version">
+
+SYS 6.8.22
+
+</div>
+
+</div>
+
+<!-- MAIN CONTENT STARTS HERE -->
+<div id="dashboard">
+
+    <!-- LEFT -->
+
+    <div id="radarPanel" class="panel">
+
+        <div class="panelTitle">
+            RADAR ARRAY
+        </div>
+
+        <div class="panelContent">
+
+            <svg id="radarSVG"
+     viewBox="0 0 300 300">
+
+    <defs>
+
+        <radialGradient id="radarGlow">
+
+            <stop offset="0%"
+                  stop-color="#5fffff"
+                  stop-opacity=".35"/>
+
+            <stop offset="100%"
+                  stop-color="#5fffff"
+                  stop-opacity="0"/>
+
+        </radialGradient>
+
+    </defs>
+
+    <!-- Glow -->
+
+    <circle
+        cx="150"
+        cy="150"
+        r="128"
+        fill="url(#radarGlow)"/>
+
+    <!-- Outer -->
+
+    <circle
+        cx="150"
+        cy="150"
+        r="120"
+        class="radarRing"/>
+
+    <circle
+        cx="150"
+        cy="150"
+        r="90"
+        class="radarRing"/>
+
+    <circle
+        cx="150"
+        cy="150"
+        r="60"
+        class="radarRing"/>
+
+    <circle
+        cx="150"
+        cy="150"
+        r="30"
+        class="radarRing"/>
+
+    <!-- Crosshair -->
+
+    <line
+        x1="150"
+        y1="20"
+        x2="150"
+        y2="280"
+        class="radarLine"/>
+
+    <line
+        x1="20"
+        y1="150"
+        x2="280"
+        y2="150"
+        class="radarLine"/>
+
+    <!-- Sweep -->
+
+   <!--<g id="radarSweep">
+
+        <path
+            d="
+            M150 150
+            L150 25
+            A125 125 0 0 1
+            235 60
+            Z"
+
+            class="radarBeam"/>
+
+    </g>-->
+
+    <!-- Centre -->
+
+    <circle
+        cx="150"
+        cy="150"
+        r="5"
+        class="radarCentre"/>
+
+    <!-- Blips -->
+
+    <!--<circle
+        class="blip"
+        cx="103"
+        cy="82"
+        r="3"/>
+
+    <circle
+        class="blip"
+        cx="205"
+        cy="112"
+        r="3"/>
+
+    <circle
+        class="blip"
+        cx="188"
+        cy="205"
+        r="3"/>
+
+    <circle
+        class="blip"
+        cx="90"
+        cy="188"
+        r="3"/>-->
+
+</svg>
+        </div>
+
+<center><br> <br>
+<div id="subStatus">
+
+    ARRAY 03 
+</div>
+<h2><font color=#ff3232>OFF-LINE</font></h2>
+
+    </div>
+
+    <!-- CENTRE -->
+
+    <div id="centrePanel" class="panel">
+
+        <div class="panelTitle">
+
+            ARRAY STATUS: <font color="#ff3232">OFF-LINE</font>
+
+        </div>
+
+        <div class="panelContent">
+
+            <div id="screen">
+
+                <h1 id="screenHeading">
+
+    ATTEMPTING TO ACQUIRE SIGNAL
+
+</h1>
+
+<h2><font color=#ff3c3c>LAST TRANSMISSION: 183 DAYS AGO</font></h2>
+
+
+                <div id="screenText">
+
+<div id="screenText">
+
+<div class="telemetry">
+<TABLE>
+<TR><TD align=right>
+AZIMUTH :&nbsp;
+</TD><TD align=left>
+<span id="azimuthValue">
+142.3°
+</span>
+</TD></TR>
+
+<TR><TD align=right>
+ELEVATION :&nbsp;
+</TD><TD align=left>
+<span id="elevationValue">
+51.7°
+</span>
+</TD></TR>
+
+<TR><TD align=right>
+SIGNAL STRENGTH :&nbsp; 
+</TD><TD align=left>
+<span id="signalValue">
+------ dBm
+</span>
+</TD></TR>
+
+<TR><TD align=right>
+TRACKING ERROR :&nbsp; 
+</TD><TD align=left>
+<span id="trackingError">
+0.72°
+</span>
+</TD></TR>
+
+<TR><TD align=right>
+LOCK STATUS :&nbsp;
+</TD><TD align=left>
+<span id="azimuthValue"></font>
+<font color="#ff3232">FAILED
+</span>
+</TD></TR>
+</TABLE>
+
+
+</div>
+
+</div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div id="diagnosticPanel"
+         class="panel">
+
+        <div class="panelTitle">
+
+            SYSTEM DIAGNOSTICS
+
+        </div>
+
+        <div class="panelContent">
+
+            <div id="diagnostics">
+
+<div class="meter">
+
+                    <label>
+
+                        SYSTEM INTEGRITY
+
+                    </label>
+
+                    <div class="bar">
+
+                        <div class="fill"
+                             id="integrityBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="meter">
+
+                    <label>
+
+                        POWER LEVEL
+
+                    </label>
+
+                    <div class="bar">
+
+                        <div class="fill"
+                             id="powerBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="meter">
+
+                    <label>
+
+                        SIGNAL NOISE
+
+                    </label>
+
+                    <div class="bar">
+
+                        <div class="fill"
+                             id="noiseBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="meter">
+
+                    <label>
+
+                        LINK STABILITY
+
+                    </label>
+
+                    <div class="bar">
+
+                        <div class="fill"
+                             id="stabilityBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="meter">
+
+                    <label>
+
+                        PACKETS SENT
+
+                    </label>
+
+                    <div class="stillbars">
+
+                        <div class="nofill"
+                             id="packsendBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="meter">
+
+                    <label>
+
+                        PACKETS RECEIVED
+
+                    </label>
+
+                    <div class="stillbars">
+
+                        <div class="nofill"
+                             id="packrecBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="meter">
+
+                    <label>
+
+                        ELECTROMAGNETIC INTERFERENCE
+
+                    </label>
+
+                    <div class="bar">
+
+                        <div class="fill"
+                             id="electroBar">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+
+    <div id="bottomPanel"
+         class="panel">
+
+        <div class="panelTitle">
+
+            COMMUNICATIONS
+
+        </div>
+
+        <div class="panelContent">
+
+            <div id="bottomGrid">
+
+                <canvas
+                    id="waveCanvas">
+
+                </canvas>
+
+                <div id="signalArea">
+
+                </div>
+
+                <div id="commLog">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+const stillbars = {
+    packsendBar: 0,
+    packrecBar: 0
+};
+
+const bars = {
+
+    integrityBar: 82,
+    
+    noiseBar: 12,
+    stabilityBar: 0,
+
+    electroBar: 22
+};
+
+function updateBars(){
+
+    Object.keys(bars).forEach(id=>{
+
+        let value = bars[id];
+
+        value += Math.random()*8-4;
+
+        value=Math.max(0,Math.min(100,value));
+
+        bars[id]=value;
+
+        document.getElementById(id).style.width =
+            value + "%";
+
+    });
+
+}
+
+setInterval(updateBars,1500);
+updateBars();
+
+/*******************************************
+COMMUNICATION LOG
+*******************************************/
+
+const log=document.getElementById("commLog");
+
+const messages=[
+
+"LINK CHECK COMPLETE",
+"ATTEMPTING TO ACQUIRE SIGNAL",
+"CALIBRATING DISH",
+"SCANNING DEEP SPACE CHANNELS",
+"LINK FAILURE",
+"NO ACTIVE TRANSMISSIONS",
+"ANTENNA SERVO STATUS OK",
+"BANDWIDTH NORMAL",
+"SUBSPACE LINK OFF-LINE",
+"CARRIER SIGNAL LOST",
+"ROUTING THROUGH AUXILIARY NODE",
+"POWER REDISTRIBUTION ACTIVE",
+"BACKGROUND NOISE FILTERING",
+"RETRYING CONNECTION"
+
+];
+
+function addLog(){
+
+    const time=new Date()
+        .toLocaleTimeString();
+
+    const line=document.createElement("div");
+
+    line.textContent=
+        "["+time+"] "+
+        messages[
+        Math.floor(
+        Math.random()*
+        messages.length)];
+
+    log.prepend(line);
+
+    while(log.children.length>15){
+
+        log.removeChild(
+        log.lastChild);
+
+    }
+
+}
+
+setInterval(addLog,2200);
+
+for(let i=0;i<8;i++) addLog();
+
+/*******************************************
+SIGNAL AREA
+*******************************************/
+
+const signalArea=
+document.getElementById("signalArea");
+
+for(let i=0;i<12;i++){
+
+    const line=
+    document.createElement("div");
+
+    line.className=
+    "signalLine";
+
+    line.style.top=
+    (i*16+20)+"px";
+
+    line.style.animationDelay=
+    (Math.random()*4)+"s";
+
+    signalArea.appendChild(line);
+
+}
+
+/*******************************************
+WAVEFORM
+*******************************************/
+
+const canvas=
+document.getElementById("waveCanvas");
+
+const ctx=
+canvas.getContext("2d");
+
+function resizeCanvas(){
+
+    canvas.width=
+    canvas.offsetWidth;
+
+    canvas.height=
+    canvas.offsetHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+"resize",
+resizeCanvas);
+
+let phase=0;
+
+function drawWave(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height);
+
+    ctx.strokeStyle=
+    "#6ef9ff";
+
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+
+    for(let x=0;
+        x<canvas.width;
+        x++){
+
+        let y=
+        canvas.height/2+
+
+        Math.sin(
+        x*0.02+
+        phase)*1.1+
+
+        Math.sin(
+        x*0.07+
+        phase*1.7)*1.1;
+
+        if(x===0){
+
+            ctx.moveTo(x,y);
+
+        }else{
+
+            ctx.lineTo(x,y);
+
+        }
+
+    }
+
+    ctx.stroke();
+
+    phase+=0.05;
+
+    requestAnimationFrame(
+    drawWave);
+
+}
+
+drawWave();
+
+
+/*******************************************
+SYSTEM STATES
+*******************************************/
+
+
+const systemStates = [
+
+{
+text:"FAILED TO SEND DISTRESS SIGNAL",
+color:"red"
+}
+
+];
+
+const heading =
+document.getElementById(
+"screenHeading");
+
+function changeState(){
+
+    const state =
+    systemStates[0];
+
+    heading.style.opacity=0;
+
+    setTimeout(()=>{
+
+        heading.innerText=
+        state.text;
+
+        heading.style.color=
+        state.color;
+
+        heading.style.opacity=1;
+
+    },300);
+
+}
+
+changeState();
+
+let stateIndex = 0;
+
+function cycleState(){
+
+    heading.style.opacity = 0;
+
+    setTimeout(0,250);
+
+}
+
+
+setInterval(
+    0,
+    5000
+);
+
+/*******************************************
+ANIMATE ELIVATION
+*******************************************/
+
+let azimuth = 142.3;
+let elevation = 51.7;
+let error = 0.72;
+
+const azimuthField =
+document.getElementById(
+"azimuthValue");
+
+const elevationField =
+document.getElementById(
+"elevationValue");
+
+const errorField =
+document.getElementById(
+"trackingError");
+
+function updateTelemetry(){
+
+    azimuth +=
+    (Math.random()*2)-1;
+
+    elevation +=
+    (Math.random()*1.4)-0.7;
+
+    error +=
+    (Math.random()*0.2)-0.1;
+
+    azimuth =
+    (azimuth+360)%360;
+
+    elevation =
+    Math.max(
+        0,
+        Math.min(
+        90,
+        elevation));
+
+    error =
+    Math.max(
+        0.05,
+        Math.min(
+        5,
+        error));
+
+    azimuthField.innerText =
+    azimuth.toFixed(1)+"°";
+
+    elevationField.innerText =
+    elevation.toFixed(1)+"°";
+
+    errorField.innerText =
+    error.toFixed(2)+"°";
+
+}
+
+setInterval(
+updateTelemetry,
+800);
+
+updateTelemetry();
+
+</script>
+
+</body>
+
+</html>
+<!--
+/*******************************************
+SYSTEM FLICKER
+*******************************************/
+
+const heading=
+document.getElementById(
+"screenHeading");
+
+setInterval(()=>{
+
+    heading.style.opacity=
+        0.85+
+        Math.random()*0.15;
+
+},120);
+
+-->
